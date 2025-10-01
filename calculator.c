@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 
-int isoperator(char c){
+int rightoperator(char c){
     if (c=='+' || c== '-' || c=='*' || c=='/'){
         return 1;
     }
@@ -42,7 +42,7 @@ int calculate(int a , int b , char op ,  int *error){
             return a/b;
         }
     }
-    *error=2; //If no operator from the above 4
+    *error=2; 
     return 0;
 }
 
@@ -65,7 +65,7 @@ int solve(char* expr , int *error){
             }
             nums[++numtop]= val;
         }
-        else if (isoperator(expr[i])){
+        else if (rightoperator(expr[i])){
             while (optop>=0 && precedence(operators[optop])>= precedence(expr[i])){
                 int b= nums[numtop--];
                 int a = nums[numtop--];
@@ -103,7 +103,7 @@ int main(void) {
     int result = solve(expr, &error);
 
     if (error == 1) {
-        printf("Division by zero");
+        printf("Division by zero is not allowed");
     } else if (error == 2) {
         printf("Invalid expression");
     } else {
